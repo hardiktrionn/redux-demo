@@ -16,7 +16,6 @@ const Todo = () => {
   useEffect(() => {
     if (status == "idle") {
       dispatch(fetchTodoList({ limit, page }));
-      console.log("load");
     }
   }, [status, page, limit, dispatch]);
 
@@ -47,11 +46,12 @@ const Todo = () => {
   return (
     <>
       <ul className="divide-y divide-gray-200 px-4">
-        {item.map((item) => (
+        {item.map((item, i) => (
           <li key={item?.id} className="py-4 px-2">
             <div className="flex items-center relative">
-              <label className="ml-3 block text-gray-900 w-[70%] truncate overflow-hidden">
-                <span className="text-lg font-medium">{item?.title}</span>
+              <label className="ml-3 block text-gray-900 w-[70%] truncate overflow-hidden font-medium text-lg">
+                <span className="">{i + 1}. </span>
+                <span className="">{item?.title}</span>
               </label>
               <button
                 onClick={() => dispatch(removeTodo(item?.id))}
@@ -65,6 +65,11 @@ const Todo = () => {
         <div ref={ref} className="h-20">
           {status === "loading" && (
             <p className="animate-pulse text-center">Loading...</p>
+          )}
+          {!hashMore && (
+            <p className="text-center my-2 text-xl font-semibold">
+              Not More Data Found
+            </p>
           )}
         </div>
 
